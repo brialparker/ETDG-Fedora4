@@ -99,8 +99,201 @@
     </section>  	
     
     <section class="slide">
-    	<h3>start Peter's stuff</h3>
-	</section>
+    	<h2>Triple</h2>
+        <ul>
+            <li>&lt;subject&gt; &lt;predicate&gt; &lt;object&gt;</li>
+            <li>subjects and predicates must be URIs (names)</li>
+            <li>objects may be URIs (names) or plain values (text, numbers, dates,
+            etc.)</li>
+        </ul>
+    </section>
+    
+    <section class="slide">
+    	<h2>Graph</h2>
+        <img src="img/min.png">
+    </section>
+    <section class="slide">
+        <h2>Serialization</h2>
+        <ul>
+            <li>Way of writing down a graph</li>
+            <li>N-Triples</li>
+            <li>Turtle</li>
+            <li>RDF/XML</li>
+            <li>JSON-LD</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2>N-Triples</h2>
+        <ul>
+            <li>ASCII-only</li>
+            <li>One complete triple per line</li>
+        </ul>
+        <pre style="white-space: pre; font-size: .75em; overflow-x: scroll;"><code>
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type> &lt;http://schema.org/CreativeWork> .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type> &lt;http://schema.org/Book> .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://www.w3.org/2000/01/rdf-schema#label> "Kurouma monogatari" .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://bibliograph.net/translationOfWork> &lt;http://id.loc.gov/authorities/names/n82057824> .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/creator> &lt;http://viaf.org/viaf/5052475> .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/creator> &lt;http://id.loc.gov/authorities/names/n50001405> .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/genre> "Fiction"@en .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/name> "\u9ED1\u99AC\u7269\u8A9E"@ja .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/name> "Kurouma monogatari"@ja-Latn .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/publisher> "\u682A\u5F0F\u4F1A\u793E\u56FD\u6C11\u56F3\u66F8\u520A\u884C\u4F1A"@ja .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/datePublished> "1949-02-25" .
+&lt;http://hdl.handle.net/1903.1/21128> &lt;http://schema.org/isPartOf> &lt;http://digital.lib.umd.edu/prange> .
+&lt;http://viaf.org/viaf/5052475> &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type> &lt;http://schema.org/Person> .
+&lt;http://viaf.org/viaf/5052475> &lt;http://schema.org/birthDate> "1820" .
+&lt;http://viaf.org/viaf/5052475> &lt;http://schema.org/deathDate> "1878" .
+&lt;http://viaf.org/viaf/5052475> &lt;http://schema.org/familyName> "Sewell" .
+&lt;http://viaf.org/viaf/5052475> &lt;http://schema.org/givenName> "Anna" .
+&lt;http://viaf.org/viaf/5052475> &lt;http://schema.org/name> "Anna Sewell" .
+        </code></pre>
+    </section>
+    <section class="slide">
+        <h2>Turtle</h2>
+        <ul>
+            <li>Unicode-aware</li>
+            <li>Compact syntax</li>
+        </ul>
+        <pre style="white-space: pre; font-size: .75em; overflow-x: scroll;"><code>
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: &lt;http://schema.org/> .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bgn: &lt;http://bibliograph.net/> .
+@prefix dcterms: &lt;http://purl.org/dc/terms/> .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#> .
+
+&lt;http://hdl.handle.net/1903.1/21128>
+    bgn:translationOfWork &lt;http://id.loc.gov/authorities/names/n82057824> ;
+    schema:creator &lt;http://id.loc.gov/authorities/names/n50001405>, &lt;http://viaf.org/viaf/5052475> ;
+    schema:datePublished "1949-02-25" ;
+    schema:genre "Fiction"@en ;
+    schema:isPartOf &lt;http://digital.lib.umd.edu/prange> ;
+    schema:name "Kurouma monogatari"@ja-Latn, "黑馬物語"@ja ;
+    schema:publisher "株式会社国民図書刊行会"@ja ;
+    a schema:Book, schema:CreativeWork ;
+    rdfs:label "Kurouma monogatari" .
+
+&lt;http://viaf.org/viaf/5052475>
+    schema:birthDate "1820" ;
+    schema:deathDate "1878" ;
+    schema:familyName "Sewell" ;
+    schema:givenName "Anna" ;
+    schema:name "Anna Sewell" ;
+    a schema:Person .
+        </code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>RDF/XML</h2>
+        <ul>
+            <li>XML syntax</li>
+            <li>Reuse existing XML tools (e.g., XSLT) to process/create</li>
+        </ul>
+        <pre style="white-space: pre; font-size: .75em; overflow-x: scroll;"><code>
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;rdf:RDF xmlns:bgn="http://bibliograph.net/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:schema="http://schema.org/">
+  &lt;schema:CreativeWork rdf:about="http://hdl.handle.net/1903.1/21128">
+    &lt;bgn:translationOfWork rdf:resource="http://id.loc.gov/authorities/names/n82057824"/>
+    &lt;schema:creator rdf:resource="http://id.loc.gov/authorities/names/n50001405"/>
+    &lt;schema:creator rdf:resource="http://viaf.org/viaf/5052475"/>
+    &lt;schema:datePublished>1949-02-25&lt;/schema:datePublished>
+    &lt;schema:genre xml:lang="en">Fiction&lt;/schema:genre>
+    &lt;schema:isPartOf rdf:resource="http://digital.lib.umd.edu/prange"/>
+    &lt;schema:name xml:lang="ja-Latn">Kurouma monogatari&lt;/schema:name>
+    &lt;schema:name xml:lang="ja">黑馬物語&lt;/schema:name>
+    &lt;schema:publisher xml:lang="ja">株式会社国民図書刊行会&lt;/schema:publisher>
+    &lt;rdf:type rdf:resource="http://schema.org/Book"/>
+    &lt;rdfs:label>Kurouma monogatari&lt;/rdfs:label>
+  &lt;/schema:CreativeWork>
+  &lt;schema:Person rdf:about="http://viaf.org/viaf/5052475">
+    &lt;schema:birthDate>1820&lt;/schema:birthDate>
+    &lt;schema:deathDate>1878&lt;/schema:deathDate>
+    &lt;schema:familyName>Sewell&lt;/schema:familyName>
+    &lt;schema:givenName>Anna&lt;/schema:givenName>
+    &lt;schema:name>Anna Sewell&lt;/schema:name>
+  &lt;/schema:Person>
+&lt;/rdf:RDF>
+        </code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>JSON-LD</h2>
+        <ul>
+            <li>JSON syntax</li>
+        </ul>
+        <pre style="white-space: pre; font-size: .75em; height: 40em; overflow-y: scroll;"><code>
+{
+  "@context": {
+    "bgn": "http://bibliograph.net/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "http://hdl.handle.net/1903.1/21128",
+      "@type": [
+        "schema:CreativeWork",
+        "schema:Book"
+      ],
+      "bgn:translationOfWork": {
+        "@id": "http://id.loc.gov/authorities/names/n82057824"
+      },
+      "rdfs:label": "Kurouma monogatari",
+      "schema:creator": [
+        {
+          "@id": "http://viaf.org/viaf/5052475"
+        },
+        {
+          "@id": "http://id.loc.gov/authorities/names/n50001405"
+        }
+      ],
+      "schema:datePublished": "1949-02-25",
+      "schema:genre": {
+        "@language": "en",
+        "@value": "Fiction"
+      },
+      "schema:isPartOf": {
+        "@id": "http://digital.lib.umd.edu/prange"
+      },
+      "schema:name": [
+        {
+          "@language": "ja",
+          "@value": "黑馬物語"
+        },
+        {
+          "@language": "ja-Latn",
+          "@value": "Kurouma monogatari"
+        }
+      ],
+      "schema:publisher": {
+        "@language": "ja",
+        "@value": "株式会社国民図書刊行会"
+      }
+    },
+    {
+      "@id": "http://viaf.org/viaf/5052475",
+      "@type": "schema:Person",
+      "schema:birthDate": "1820",
+      "schema:deathDate": "1878",
+      "schema:familyName": "Sewell",
+      "schema:givenName": "Anna",
+      "schema:name": "Anna Sewell"
+    }
+  ]
+}
+        </code></pre>
+    </section>
+
 	
 	<!-- after Peter's bit about triples/graphs/SPARCQL we'll switch to a live demo -->
 	  <!-- End slides. -->
